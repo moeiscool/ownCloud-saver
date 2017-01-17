@@ -1,2 +1,2 @@
 # ownCloud-saver
-Saver button for Onwwnas
+Saver button for OwnCloud
