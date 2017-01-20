@@ -2,13 +2,24 @@
 //This file should be where the owncloud server is hosted.
 
 //config
-$username='';
-$password='';
 $server='http://localhost';
 $tempDir=__DIR__.'/tmp/';
-
-//
 $url=$_GET['url'];
+//user
+if(isset($_GET['user'])){
+    $username=$_GET['user'];
+}else{
+    //set default username
+    $username='';
+}
+//password
+if(isset($_GET['pass'])){
+    $password=$_GET['pass'];
+}else{
+    //set default password
+    $password='';
+}
+////
 //filename
 if(isset($_GET['name'])){
     $filename=$_GET['name'];
