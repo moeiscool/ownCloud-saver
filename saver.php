@@ -2,9 +2,13 @@
 //This file should be where the owncloud server is hosted.
 
 //config
-$server='http://localhost';
-$tempDir=__DIR__.'/tmp/';
+$server='https://cloud.hgcommunity.net';
+$tempDir=__DIR__.'';
 $url=$_GET['url'];
+//check url
+if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
+    die('Not a valid URL');
+}
 //user
 if(isset($_GET['user'])){
     $username=$_GET['user'];
@@ -36,10 +40,6 @@ if(isset($_GET['dir'])){
     }
 }else{
     $dir='';
-}
-//check url
-if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
-    die('Not a valid URL');
 }
 //make temp dir
 if (!file_exists($tempDir)) {
