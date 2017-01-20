@@ -24,3 +24,8 @@ To change the save directory add `dir`.
 ```
 http://yoursite/saver.php?url=http://somesite.com/file.mp4&name=customname.mp4&dir=somefolder/here/andhere/
 ```
+
+To use a different `user` and `pass`.
+```
+http://yoursite/saver.php?url=http://somesite.com/file.mp4&name=customname.mp4&dir=somefolder/here/andhere/&user=moeiscool&pass=ilikecookies
+```
