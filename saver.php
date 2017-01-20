@@ -4,10 +4,11 @@
 //config
 $username='';
 $password='';
-$url=$_GET['url'];
-
 $server='http://localhost';
 $tempDir=__DIR__.'/tmp/';
+
+//
+$url=$_GET['url'];
 //filename
 if(isset($_GET['name'])){
     $filename=$_GET['name'];
@@ -38,7 +39,7 @@ $file = file_get_contents($url);
 //set file in temp dir
 file_put_contents($tempDir.$filename,$file);
 // upload it
-exec('curl -u '.$username.':'.$password.' --upload-file "'.$tempDir.$filename.'" "'.$server.'/remote.php/webdav/'.$dir.$filename.'"');
+echo exec('curl -u '.$username.':'.$password.' --upload-file "'.$tempDir.$filename.'" "'.$server.'/remote.php/webdav/'.$dir.$filename.'"');
 //delete file
 unlink($tempDir.$filename);
 ?>
