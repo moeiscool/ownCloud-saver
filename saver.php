@@ -2,7 +2,7 @@
 //This file should be where the owncloud server is hosted.
 
 //config
-$server='https://cloud.hgcommunity.net';
+$server='http://localhost';
 $tempDir=__DIR__.'';
 $url=$_GET['url'];
 //check url
