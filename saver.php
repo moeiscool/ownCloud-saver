@@ -1,6 +1,5 @@
 <?php
 //This file should be where the owncloud server is hosted.
-error_reporting(9);
 //config
 $server='http://localhost';
 $tempDir=__DIR__.'/';
@@ -52,25 +51,24 @@ if (!file_exists($tempDir)) {
 $file = file_get_contents($url);
 //set file in temp dir
 file_put_contents($tempDir.$filename,$file);
-// upload it
+// upload it with curl
+$ch = curl_init();
 
-    $ch = curl_init();
+curl_setopt($ch, CURLOPT_URL,$server.'/remote.php/webdav/'.$dir.$filename);
+curl_setopt($ch, CURLOPT_USERPWD,$username.':'.$password);
+curl_setopt($ch, CURLOPT_PUT, 1);
 
-    curl_setopt($ch, CURLOPT_URL,$server.'/remote.php/webdav/'.$dir.$filename);
-    curl_setopt($ch, CURLOPT_USERPWD,$username.':'.$password);
-    curl_setopt($ch, CURLOPT_PUT, 1);
+$fh_res = fopen($tempDir.$filename, 'r');
 
-    $fh_res = fopen($tempDir.$filename, 'r');
+curl_setopt($ch, CURLOPT_INFILE, $fh_res);
+curl_setopt($ch, CURLOPT_INFILESIZE, filesize($tempDir.$filename));
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_BINARYTRANSFER, TRUE); // --data-binary
 
-    curl_setopt($ch, CURLOPT_INFILE, $fh_res);
-    curl_setopt($ch, CURLOPT_INFILESIZE, filesize($tempDir.$filename));
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_BINARYTRANSFER, TRUE); // --data-binary
-
-    $curl_response_res = curl_exec ($ch);
-    fclose($fh_res);
+$curl_response_res = curl_exec ($ch);
+fclose($fh_res);
 echo $curl_response_res;
 //delete file
 unlink($tempDir.$filename);
